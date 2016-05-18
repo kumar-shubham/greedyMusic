@@ -8,7 +8,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def index(request):
-    return HttpResponseRedirect('tracks')
+    return HttpResponseRedirect('trackmusic/tracks')
 
 
 def tracks(request):
