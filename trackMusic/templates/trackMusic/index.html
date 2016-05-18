@@ -1,0 +1,80 @@
+{% extends 'trackmusic/base.html' %}
+{% block tab %}
+    {% include "trackmusic/tabs.html" with active_tab='tracks' %}
+{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-lg-4"></div>
+  <div class="col-lg-4">
+      <form id="searchform" action="{% url 'trackmusic:searchTrack' %}" method="get" accept-charset="utf-8">
+    <div class="input-group">
+      <input type="text" name="q" class="form-control" placeholder="Search for music tracks...">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="submit">Go!</button>
+      </span>
+      
+    </div>
+      </form>
+  </div>
+  
+</div>
+
+<div class="clearfix visible-xs-block"></div>
+<div class="container" style="width: 80%;">
+
+    {% if query_string %}
+        <h3>Result for the query: {{ query_string }}</h3>
+    {% endif %}
+<table class="table">
+ 
+ {% if track_list %}
+ 	<thead>
+ 		<tr>
+ 		<th>Track</th>
+ 		<th>Genre</th>
+ 		<th>Rating</th>
+ 		</tr>
+ 	</thead>
+ 	<tbody>
+	{% for track in track_list %}
+		<tr></tr>
+			<td><a href="{% url 'trackmusic:trackDetail' track.id %}">{{ track.track_name }}</a></td>
+			<td> 
+				{% for genre in track.trackgenremap_set.all %}
+					<a href="{% url 'trackmusic:genre_detail' genre.genre_id.id %}">{{ genre.genre_id.genre_name }}</a>
+				{% endfor %}
+			</td>
+			<td> <input id="input-3" value="{{ track.rating }}" class="rating-loading" data-size="xs"></td>
+		</tr>
+	{% endfor %}
+{% else %}
+	<p>
+		No Tracks are available.
+	</p>
+{% endif %}
+</tbody>
+</table>
+
+    <nav>
+  <ul class="pager">
+    {% if track_list.has_previous %}
+      <li><a href="?page={{ track_list.previous_page_number }}">Previous</a></li>
+      {% endif %}
+      {% if track_list.number %}
+      <li class="current">
+            Page {{ track_list.number }} of {{ track_list.paginator.num_pages }}.
+        </li>
+      {% endif %}
+    {% if track_list.has_next %}
+      <li><a href="?page={{ track_list.next_page_number }}">Next</a></li>
+      {% endif %}
+  </ul>
+    </nav>
+
+</div>
+
+<div>
+	<button type="button" class="btn btn-primary btn-lg btn-block" onclick="window.location='tracks/add'">Add New Track</button>
+</div>
+
+{% endblock %}

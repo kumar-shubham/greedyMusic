@@ -1,0 +1,35 @@
+{% extends 'trackmusic/base.html' %}
+{% block tab %}
+    {% include "trackmusic/tabs.html" with active_tab='tracks' %}
+{% endblock %}
+{% block content %}
+
+<div class="container" style="width:60%">
+	<div class="page-header">
+  <h1 style="text-align: -webkit-center;">Track Detail</h1>
+	</div>
+	<table class="table">
+		<tr>
+			<td><b>Track Name:</b></td>
+			<td>{{ track.track_name }}</td>
+		</tr>
+		<tr>
+			<td><b>Track Genres:</b></td>
+			<td>
+				{% for genre in track.trackgenremap_set.all %}
+					{{ genre.genre_id.genre_name }}
+				{% endfor %}
+			</td>
+		</tr>
+		<tr>
+			<td><b>Track Rating:</b></td>
+			<td><input id="input-3" value="{{ track.rating }}" class="rating-loading" data-size="sm"></td>
+		</tr>
+		<tr>
+			<td><a href="/trackmusic" class="btn btn-primary btn-lg active" role="button">Back to tracks</a></td>
+			<td></td>
+		</tr>
+	</table>
+</div>
+
+{% endblock %}

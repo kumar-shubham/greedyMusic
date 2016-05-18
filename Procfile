@@ -1,0 +1,1 @@
+web: gunicorn greedyMusic.wsgi --log-file -

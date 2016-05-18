@@ -1,0 +1,75 @@
+{% extends 'trackmusic/base.html' %}
+{% block tab %}
+    {% include "trackmusic/tabs.html" with active_tab='genres' %}
+{% endblock %}
+{% block content %}
+<div class="row">
+	<div class="col-lg-4"></div>
+  <div class="col-lg-4">
+      <form id="searchform" action="{% url 'trackmusic:searchGenre' %}" method="get" accept-charset="utf-8">
+    <div class="input-group">
+      <input name="q" type="text" class="form-control" placeholder="Search for genre...">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="submit">Go!</button>
+      </span>
+
+    </div>
+      </form>
+  </div>
+
+</div>
+
+<div class="clearfix visible-xs-block"></div>
+<div class="container" style="width: 80%;">
+    {% if query_string %}
+        <h3>Result for the query: {{ query_string }}</h3>
+    {% endif %}
+<table class="table">
+
+ {% if genre_list %}
+ 	<thead>
+ 		<tr>
+ 		<th>Genre</th>
+ 		<th>Total Songs</th>
+ 		</tr>
+ 	</thead>
+ 	<tbody>
+	{% for genre in genre_list %}
+		<tr></tr>
+			<td><a href="{% url 'trackmusic:genre_detail' genre.id %}">{{ genre.genre_name }}</a></td>
+			<td>
+				{{ genre.trackgenremap_set.all|length }}
+			</td>
+		</tr>
+	{% endfor %}
+{% else %}
+	<p>
+		No Genre are available.
+	</p>
+{% endif %}
+</tbody>
+</table>
+
+    <nav>
+  <ul class="pager">
+    {% if genre_list.has_previous %}
+      <li><a href="?page={{ genre_list.previous_page_number }}">Previous</a></li>
+      {% endif %}
+      {% if genre_list.number %}
+      <li class="current">
+            Page {{ genre_list.number }} of {{ genre_list.paginator.num_pages }}.
+        </li>
+      {% endif %}
+    {% if genre_list.has_next %}
+      <li><a href="?page={{ genre_list.next_page_number }}">Next</a></li>
+      {% endif %}
+  </ul>
+    </nav>
+
+</div>
+
+<div>
+	<button type="button" class="btn btn-primary btn-lg btn-block" onclick="window.location='genres/add'">Add New Genre</button>
+</div>
+
+{% endblock %}

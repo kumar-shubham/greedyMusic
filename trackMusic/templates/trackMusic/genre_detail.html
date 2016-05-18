@@ -1,0 +1,50 @@
+{% extends 'trackmusic/base.html' %}
+{% block tab %}
+    {% include "trackmusic/tabs.html" with active_tab='genres' %}
+{% endblock %}
+{% block content %}
+
+
+<div class="page-header">
+  <h1 style="text-align: -webkit-center;">{{ genre.genre_name }}</h1>
+	</div>
+
+<div class="clearfix visible-xs-block"></div>
+<div class="container" style="width: 80%;">
+<table class="table">
+
+ {% if genre.trackgenremap_set.all %}
+ 	<thead>
+ 		<tr>
+ 		<th>Track</th>
+ 		<th>Genre</th>
+ 		<th>Rating</th>
+ 		</tr>
+ 	</thead>
+ 	<tbody>
+	{% for track in genre.trackgenremap_set.all %}
+		<tr></tr>
+			<td><a href="{% url 'trackmusic:trackDetail' track.track_id.id %}">{{ track.track_id.track_name }}</a></td>
+			<td>
+				{% for g in track.track_id.trackgenremap_set.all %}
+					<a href="{% url 'trackmusic:genre_detail' g.genre_id.id %}">{{ g.genre_id.genre_name }}</a>
+				{% endfor %}
+			</td>
+			<td> <input id="input-3" value="{{ track.track_id.rating }}" class="rating-loading" data-size="xs"></td>
+		</tr>
+	{% endfor %}
+{% else %}
+	<p>
+		No Tracks are available for this genre.
+	</p>
+{% endif %}
+</tbody>
+</table>
+
+</div>
+
+<div>
+	<button type="button" class="btn btn-primary btn-lg btn-block" onclick="window.location='/trackmusic/tracks/add'">Add New Track</button>
+</div>
+
+{% endblock %}

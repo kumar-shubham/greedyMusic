@@ -1,0 +1,35 @@
+{% extends 'trackmusic/base.html' %}
+{% block tab %}
+    {% include "trackmusic/tabs.html" with active_tab='add_genres' %}
+{% endblock %}
+{% block content %}
+<div class="container" style="width:80%">
+	<div class="page-header">
+  <h1 style="text-align: -webkit-center;">Add Genre</h1>
+	</div>
+
+  <h1 style="text-align: -webkit-center; color:#00FF00">{{ message }}</h1>
+
+    {{ form.non_field_errors }}
+	<form class="form-horizontal" method="post" action="">
+	{% csrf_token %}
+  <div class="form-group">
+      {{ form.genre_name.errors }}
+    <label for="inputTrack" class="col-sm-2 control-label">Genre Name</label>
+    <div class="col-sm-10">
+      {{ form.genre_name }}
+    </div>
+  </div>
+
+  <div class="form-group">
+    <div class="col-sm-offset-2 col-sm-10">
+      <button type="submit" class="btn btn-default">Add Genre</button>
+
+    </div>
+  </div>
+</form>
+
+    <button class="btn btn-default btn-primary" onclick="window.location='/trackmusic'">Back To Tracks</button>
+</div>
+
+{% endblock %}
