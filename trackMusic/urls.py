@@ -4,6 +4,7 @@ from . import views
 app_name = 'trackmusic'
 urlpatterns =  [
 	url(r'^$', views.index, name='index'),
+	url(r'^trackmusic/^$', views.index, name='index1'),
 	url(r'^trackmusic/tracks$', views.tracks, name='tracks'),
 	url(r'^trackmusic/tracks/([0-9]+)$', views.trackDetail, name='trackDetail'),
 	url(r'^trackmusic/genres$', views.genres, name='genres'),
